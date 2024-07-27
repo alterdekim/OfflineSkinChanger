@@ -1,0 +1,5 @@
+gui.options.page.general.button.edit_skin=Edit player\'s skin
+gui.options.page.edit_skin.button.load_skin=Load skin
+gui.options.page.edit_skin.button.load_cape=Load cape
+gui.options.page.edit_skin.button.close=Close
+gui.options.page.edit_skin.label.title=Change skin/cape
