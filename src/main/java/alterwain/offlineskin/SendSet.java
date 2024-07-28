@@ -15,10 +15,9 @@ public class SendSet extends Thread {
 
     @Override
     public void run() {
-            int i = 0;
-            while(i < 10) {
+            while(true) {
                 try {
-                    Thread.sleep(2500);
+                    Thread.sleep(4000);
                     if (isCape) {
                         ((ForceDownloadHandler) EntityRenderDispatcher.instance.renderEngine).offlineSkinChanger$forceLoadDownloadableTexture("offlineCapeLocal:" + this.username, null, null);
                         return;
@@ -26,8 +25,7 @@ public class SendSet extends Thread {
                     ((ForceDownloadHandler) EntityRenderDispatcher.instance.renderEngine).offlineSkinChanger$forceLoadDownloadableTexture("offlineSkinLocal:" + this.username, null, PlayerSkinParser.instance);
                     return;
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    i++;
+					//e.printStackTrace();
                 }
             }
     }
