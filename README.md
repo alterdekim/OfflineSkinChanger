@@ -16,4 +16,4 @@ Place .jar file into mods directory in game client and server.
 
 ## Screenshots
 
-![mod menu]()
+![mod menu](https://github.com/alterdekim/OfflineSkinChanger/blob/7.1/screenshot.png?raw=true)
