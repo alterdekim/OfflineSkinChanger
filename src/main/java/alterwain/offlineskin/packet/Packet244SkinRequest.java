@@ -45,4 +45,16 @@ public class Packet244SkinRequest extends Packet {
     public int getPacketSize() {
         return 3;
     }
+
+    public boolean isRequestSkin() {
+        return requestSkin;
+    }
+
+    public boolean isRequestCape() {
+        return requestCape;
+    }
+
+    public boolean isRequestModelType() {
+        return requestModelType;
+    }
 }

@@ -2,6 +2,8 @@ package alterwain.offlineskin;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.options.components.BooleanOptionComponent;
+import net.minecraft.client.option.BooleanOption;
 import net.minecraft.core.lang.I18n;
 
 import javax.imageio.ImageIO;
@@ -17,6 +19,8 @@ public class GuiSkinChanger extends GuiScreen {
     private GuiButton buttonLoadSkin;
     private GuiButton buttonLoadCape;
     private GuiButton buttonClose;
+    private GuiButton modelType;
+    private GuiButton hasCape;
 
 
     public GuiSkinChanger(GuiScreen parent) {
@@ -27,6 +31,8 @@ public class GuiSkinChanger extends GuiScreen {
     public void init() {
         I18n stringtranslate = I18n.getInstance();
         this.controlList.clear();
+        this.controlList.add(this.modelType = new GuiButton(3, this.width / 2 - 100, this.height / 4 + 2, 200, 20, stringtranslate.translateKey("gui.options.page.edit_skin.button.model_slim")));
+        this.controlList.add(this.hasCape = new GuiButton(4, this.width / 2 - 100, this.height / 4 - 10 + 30 + 4, 200, 20, stringtranslate.translateKey("gui.options.page.edit_skin.button.has_cape_yes")));
         this.controlList.add(this.buttonLoadSkin = new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + 12, stringtranslate.translateKey("gui.options.page.edit_skin.button.load_skin")));
         this.controlList.add(this.buttonLoadCape = new GuiButton(1, this.width / 2 - 100, this.height / 4 - 10 + 50 + 18 + 20 + 4, 200, 20, stringtranslate.translateKey("gui.options.page.edit_skin.button.load_cape")));
         this.controlList.add(this.buttonClose = new GuiButton(2, this.width / 2 - 100, this.height / 4 + 120 + 12,  stringtranslate.translateKey("gui.options.page.edit_skin.button.close")));
@@ -50,6 +56,10 @@ public class GuiSkinChanger extends GuiScreen {
                         OfflineSkinMod.capeImage = ImageIO.read(cape);
                         Files.copy(cape.toPath(), new File(configPath, "cape.png").toPath(), StandardCopyOption.REPLACE_EXISTING);
                     }
+                } else if(button.id == 3) { // model type
+
+                } else if(button.id == 4) { // hasCape
+
                 }
             }
         } catch (IOException e) {

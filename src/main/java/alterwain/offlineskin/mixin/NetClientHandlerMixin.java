@@ -20,9 +20,17 @@ public abstract class NetClientHandlerMixin extends NetHandler implements SkinRe
 
     @Override
     public void offlineSkinChanger$handleSkinRequest(Packet244SkinRequest request) {
+        byte[] skin = new byte[0];
+        byte[] cape = new byte[0];
+        if( request.isRequestSkin() && OfflineSkinMod.skinImage != null ) {
+            skin = OfflineSkinMod.imageToBytes(OfflineSkinMod.skinImage);
+        }
+        if( request.isRequestCape() && OfflineSkinMod.capeImage != null ) {
+            cape = OfflineSkinMod.imageToBytes(OfflineSkinMod.capeImage);
+        }
         this.netManager.addToSendQueue(new Packet245SkinResponse(mc.thePlayer.username,
-                OfflineSkinMod.imageToBytes(OfflineSkinMod.skinImage),
-                OfflineSkinMod.imageToBytes(OfflineSkinMod.capeImage),
+                skin,
+                cape,
                 false));
     }
 }

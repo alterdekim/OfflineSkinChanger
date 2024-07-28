@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class OfflineSkinMod implements ModInitializer, GameStartEntrypoint, RecipeEntrypoint {
@@ -39,9 +40,11 @@ public class OfflineSkinMod implements ModInitializer, GameStartEntrypoint, Reci
 	public void beforeGameStart() {
 		configPath.mkdirs();
 		try {
-			if (new File(configPath, "skin.png").exists()) {
-				skinImage = ImageIO.read(new File(configPath, "skin.png"));
+			if(!new File(configPath, "skin.png").exists()) {
+				BufferedImage i = ImageIO.read(Objects.requireNonNull(OfflineSkinMod.class.getClassLoader().getResourceAsStream("char.png")));
+				ImageIO.write(i, "png", new File(configPath, "skin.png"));
 			}
+			skinImage = ImageIO.read(new File(configPath, "skin.png"));
 			if (new File(configPath, "cape.png").exists()) {
 				capeImage = ImageIO.read(new File(configPath, "cape.png"));
 			}
@@ -81,7 +84,7 @@ public class OfflineSkinMod implements ModInitializer, GameStartEntrypoint, Reci
 			ByteArrayInputStream is = new ByteArrayInputStream(b);
 			return ImageIO.read(is);
 		} catch (IOException e) {
-			return null; // TODO: read default skin from resources.
+			return null;
 		}
 	}
 

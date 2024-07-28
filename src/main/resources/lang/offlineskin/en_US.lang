@@ -3,3 +3,7 @@ gui.options.page.edit_skin.button.load_skin=Load skin
 gui.options.page.edit_skin.button.load_cape=Load cape
 gui.options.page.edit_skin.button.close=Close
 gui.options.page.edit_skin.label.title=Change skin/cape
+gui.options.page.edit_skin.button.model_fat=Model type: Steve
+gui.options.page.edit_skin.button.model_slim=Model type: Alex
+gui.options.page.edit_skin.button.has_cape_yes=Has cape (yes)
+gui.options.page.edit_skin.button.has_cape_no=Has cape (no)
