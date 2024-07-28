@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(NetServerHandler.class)
 public abstract class NetServerHandlerMixin extends net.minecraft.core.net.handler.NetHandler implements net.minecraft.core.net.ICommandListener,
         SkinResponseHandler {
-    @Shadow
+    @Shadow(remap = false)
     private net.minecraft.server.MinecraftServer mcServer;
 
     @Override

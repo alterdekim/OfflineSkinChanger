@@ -16,7 +16,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -29,17 +32,24 @@ public class OfflineSkinMod implements ModInitializer, GameStartEntrypoint, Reci
 	public static File configPath = new File(Global.accessor.getMinecraftDir(), "config/offlineskin");
 	public static BufferedImage skinImage;
 	public static BufferedImage capeImage;
+	public static Boolean showCape = false;
+	public static Boolean skinModel = false;
 	public static final Map<String, SkinConfig> skins = new HashMap<>();
 
     @Override
     public void onInitialize() {
-        LOGGER.info("ExampleMod initialized.");
+        LOGGER.info("OfflineSkins initialized.");
     }
 
 	@Override
 	public void beforeGameStart() {
 		configPath.mkdirs();
 		try {
+			if(!new File(configPath, "pref.conf").exists()) {
+				writeConfig();
+			} else {
+				readConfig();
+			}
 			if(!new File(configPath, "skin.png").exists()) {
 				BufferedImage i = ImageIO.read(Objects.requireNonNull(OfflineSkinMod.class.getClassLoader().getResourceAsStream("char.png")));
 				ImageIO.write(i, "png", new File(configPath, "skin.png"));
@@ -70,6 +80,7 @@ public class OfflineSkinMod implements ModInitializer, GameStartEntrypoint, Reci
 
 	public static File chooseFile() {
 		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setAcceptAllFileFilterUsed(false);
 		FileFilter filter = new FileNameExtensionFilter("PNG File","png");
 		fileChooser.addChoosableFileFilter(filter);
 		int returnValue = fileChooser.showOpenDialog(null);
@@ -96,5 +107,25 @@ public class OfflineSkinMod implements ModInitializer, GameStartEntrypoint, Reci
 			return new byte[1];
 		}
 		return baos.toByteArray();
+	}
+
+	public static void writeConfig() {
+		try {
+			Files.write(new File(configPath, "pref.conf").toPath(), (showCape + ";" + skinModel).getBytes(), StandardOpenOption.CREATE);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void readConfig() {
+		try {
+			String s = new String(Files.readAllBytes(new File(configPath, "pref.conf").toPath()));
+			String[] args = s.split(";");
+			if( args.length != 2 ) return;
+			showCape = Boolean.parseBoolean(args[0]);
+			skinModel = Boolean.parseBoolean(args[1]);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

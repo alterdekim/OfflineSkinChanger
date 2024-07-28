@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(OptionsPages.class)
 public abstract class OptionsPagesMixin {
     @Final
-    @Shadow
+    @Shadow(remap = false)
     @Mutable
     private static Minecraft mc;
 

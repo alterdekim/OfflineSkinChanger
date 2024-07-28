@@ -1,9 +1,7 @@
 package alterwain.offlineskin.mixin;
 
-import alterwain.offlineskin.OfflineSkinMod;
 import alterwain.offlineskin.SendInfo;
 import alterwain.offlineskin.packet.Packet244SkinRequest;
-import alterwain.offlineskin.packet.Packet246SkinSet;
 import net.minecraft.server.entity.player.EntityPlayerMP;
 import net.minecraft.server.player.PlayerManager;
 import org.spongepowered.asm.mixin.Final;
@@ -24,7 +22,7 @@ public abstract class PlayerManagerMixin {
 
     @Inject(method = "addPlayer", at = @At("HEAD"), remap = false)
     private void onAddPlayer(EntityPlayerMP player, CallbackInfo ci) {
-        player.playerNetServerHandler.sendPacket(new Packet244SkinRequest(true, true, false));
+        player.playerNetServerHandler.sendPacket(new Packet244SkinRequest(true, true, true));
         new SendInfo(player).start();
     }
 }

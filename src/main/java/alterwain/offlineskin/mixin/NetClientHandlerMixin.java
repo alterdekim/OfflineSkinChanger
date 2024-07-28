@@ -14,9 +14,9 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(NetClientHandler.class)
 public abstract class NetClientHandlerMixin extends NetHandler implements SkinRequestHandler {
-    @Shadow @Final private NetworkManager netManager;
+    @Shadow(remap = false) @Final private NetworkManager netManager;
 
-    @Shadow @Final private Minecraft mc;
+    @Shadow(remap = false) @Final private Minecraft mc;
 
     @Override
     public void offlineSkinChanger$handleSkinRequest(Packet244SkinRequest request) {
@@ -25,12 +25,12 @@ public abstract class NetClientHandlerMixin extends NetHandler implements SkinRe
         if( request.isRequestSkin() && OfflineSkinMod.skinImage != null ) {
             skin = OfflineSkinMod.imageToBytes(OfflineSkinMod.skinImage);
         }
-        if( request.isRequestCape() && OfflineSkinMod.capeImage != null ) {
+        if( request.isRequestCape() && OfflineSkinMod.capeImage != null && OfflineSkinMod.showCape ) {
             cape = OfflineSkinMod.imageToBytes(OfflineSkinMod.capeImage);
         }
         this.netManager.addToSendQueue(new Packet245SkinResponse(mc.thePlayer.username,
                 skin,
                 cape,
-                false));
+                OfflineSkinMod.skinModel));
     }
 }

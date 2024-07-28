@@ -14,16 +14,16 @@ import java.util.Map;
 @Mixin(RenderEngine.class)
 public abstract class RenderEngineMixin implements ForceDownloadHandler {
 
-    @Shadow
+    @Shadow(remap = false)
     private Map<String, DownloadedTexture> downloadedTextures;
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract int allocateAndSetupTexture(BufferedImage bufferedimage);
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract void bindTexture(int i);
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract int getTexture(String name);
 
     @Override
@@ -68,7 +68,7 @@ public abstract class RenderEngineMixin implements ForceDownloadHandler {
                 return false;
             }
         } else {
-            DownloadedTexture texture = (DownloadedTexture)this.downloadedTextures.get(url);
+            DownloadedTexture texture = this.downloadedTextures.get(url);
             if (texture == null) {
                 texture = new DownloadedTexture(null, imageParser);
                 if( url.startsWith("offlineSkinLocal") ) {

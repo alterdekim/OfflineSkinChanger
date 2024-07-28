@@ -1,5 +1,6 @@
 package alterwain.offlineskin.mixin;
 
+import alterwain.offlineskin.OfflineSkinMod;
 import net.minecraft.client.render.ImageParser;
 import net.minecraft.client.render.PlayerSkinParser;
 import net.minecraft.client.render.block.model.BlockModel;
@@ -45,8 +46,13 @@ public abstract class PlayerRendererMixin extends LivingRenderer<EntityPlayer> {
 
 	public void drawFirstPersonHand(EntityPlayer player) {
 		player.skinURL = "offlineSkinLocal:"+player.username;
-		this.mainModel = player.slimModel ? this.modelSlim : this.modelThick;
-		this.modelBipedMain = player.slimModel ? this.modelSlim : this.modelThick;
+		if(OfflineSkinMod.skins.containsKey(player.username)) {
+			this.mainModel = OfflineSkinMod.skins.get(player.username).getModelType() ? this.modelSlim : this.modelThick;
+			this.modelBipedMain = OfflineSkinMod.skins.get(player.username).getModelType() ? this.modelSlim : this.modelThick;
+		} else {
+			this.mainModel = player.slimModel ? this.modelSlim : this.modelThick;
+			this.modelBipedMain = player.slimModel ? this.modelSlim : this.modelThick;
+		}
 		this.modelBipedMain.onGround = 0.0F;
 		this.modelBipedMain.isRiding = false;
 		this.modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
