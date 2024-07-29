@@ -14,9 +14,13 @@ import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Packet246SkinSet extends Packet {
 
+	private static final Map<String, SendSet> skinThread = new HashMap<>();
+	private static final Map<String, SendSet> capeThread = new HashMap<>();
     private String username;
     private byte[] skin;
     private byte[] cape;
@@ -67,8 +71,18 @@ public class Packet246SkinSet extends Packet {
         BufferedImage skin1 = OfflineSkinMod.bytesToImage(this.skin);
         BufferedImage cape1 = OfflineSkinMod.bytesToImage(this.cape);
         OfflineSkinMod.skins.put(this.username, new SkinConfig(skin1, cape1, this.modelType));
-        new SendSet(this.username, false).start();
-        new SendSet(this.username, true).start();
+		if( Packet246SkinSet.skinThread.containsKey(this.username) ) {
+			Packet246SkinSet.skinThread.get(this.username).setRunning(false);
+		}
+		SendSet ss = new SendSet(this.username, false);
+        Packet246SkinSet.skinThread.put(this.username, ss);
+		ss.start();
+		if( Packet246SkinSet.capeThread.containsKey(this.username) ) {
+			Packet246SkinSet.capeThread.get(this.username).setRunning(false);
+		}
+		SendSet cs = new SendSet(this.username, true);
+        Packet246SkinSet.capeThread.put(this.username, cs);
+		cs.start();
     }
 
     @Override

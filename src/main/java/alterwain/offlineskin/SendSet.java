@@ -8,14 +8,20 @@ public class SendSet extends Thread {
     private final String username;
     private final boolean isCape;
 
+	private boolean isRunning = true;
+
     public SendSet(String username, boolean isCape) {
         this.username = username;
         this.isCape = isCape;
     }
 
+	public void setRunning(boolean isRunning) {
+		this.isRunning = isRunning;
+	}
+
     @Override
     public void run() {
-            while(true) {
+            while(isRunning) {
                 try {
                     Thread.sleep(4000);
                     if (isCape) {
